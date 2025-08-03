@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Crafting & Refining Recipes</title>
+</head>
+<body>
+  <h1>Refining Recipe Manager</h1>
+  <a href="index.html">← Back to Base Manager</a>
+
+  <h2>Resources</h2>
+  <div id="resourceList"></div>
+  <input id="newResource" placeholder="New resource name" />
+  <button onclick="addResource()">+ Add Resource</button>
+
+  <h2>Recipes</h2>
+  <div id="recipeList"></div>
+
+  <h3>Create New Recipe</h3>
+  <input id="recipeName" placeholder="Recipe name" /><br>
+  <textarea id="recipeInputs" placeholder="Inputs (e.g., 50 Water, 5 Flour Sand)"></textarea><br>
+  <textarea id="recipeOutputs" placeholder="Outputs (e.g., 1 Silicon Block)"></textarea><br>
+  <button onclick="addRecipe()">+ Add Recipe</button>
+
+  <script src="script.js"></script>
+  <script>
+    renderResources();
+    renderRecipes();
+  </script>
+</body>
+</html>

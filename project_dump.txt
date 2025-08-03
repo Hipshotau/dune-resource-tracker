@@ -1,3 +1,87 @@
+
+========================================
+.\dashboard.html
+========================================
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Total Resource Dashboard</title>
+</head>
+<body>
+  <h1>Global Resource Dashboard</h1>
+  <a href="index.html">← Back to Base Editor</a>
+  <div id="summary"></div>
+  <script src="script.js"></script>
+  <script>
+    renderTotalSummary();
+  </script>
+</body>
+</html>
+
+
+========================================
+.\index.html
+========================================
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dune Awakening Resource Tracker</title>
+</head>
+<body>
+  <h1>Dune Awakening Resource Tracker</h1>
+
+  <label for="base">Select Base:</label>
+  <select id="baseSelect"></select>
+  <button onclick="addBase()">+ Add Base</button>
+
+  <div id="resourceSection"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
+
+========================================
+.\refining.html
+========================================
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Crafting & Refining Recipes</title>
+</head>
+<body>
+  <h1>Refining Recipe Manager</h1>
+  <a href="index.html">← Back to Base Manager</a>
+
+  <h2>Resources</h2>
+  <div id="resourceList"></div>
+  <input id="newResource" placeholder="New resource name" />
+  <button onclick="addResource()">+ Add Resource</button>
+
+  <h2>Recipes</h2>
+  <div id="recipeList"></div>
+
+  <h3>Create New Recipe</h3>
+  <input id="recipeName" placeholder="Recipe name" /><br>
+  <textarea id="recipeInputs" placeholder="Inputs (e.g., 50 Water, 5 Flour Sand)"></textarea><br>
+  <textarea id="recipeOutputs" placeholder="Outputs (e.g., 1 Silicon Block)"></textarea><br>
+  <button onclick="addRecipe()">+ Add Recipe</button>
+
+  <script src="script.js"></script>
+  <script>
+    renderResources();
+    renderRecipes();
+  </script>
+</body>
+</html>
+
+
+========================================
+.\script.js
+========================================
 let state = JSON.parse(localStorage.getItem("duneState")) || {
   bases: {
     "Arrakis North": { resources: {}, refiners: [] },
@@ -186,3 +270,9 @@ if (window.location.pathname.endsWith("index.html") || window.location.pathname 
   updateBaseSelect();
   renderResourceEditor();
 }
+
+
+========================================
+.\style.css
+========================================
+

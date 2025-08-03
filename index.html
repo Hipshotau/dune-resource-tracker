@@ -1,18 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+  <nav>
+  <a href="index.html">🏠 Bases</a> |
+  <a href="dashboard.html">📊 Dashboard</a> |
+  <a href="refining.html">⚗️ Refining</a>
+</nav>
+
 <head>
   <meta charset="UTF-8">
-  <title>Dune Awakening Resource Tracker</title>
+  <title>Dune Base Tracker</title>
 </head>
 <body>
-  <h1>Dune Awakening Resource Tracker</h1>
-
-  <label for="base">Select Base:</label>
+  <h1>Base Resource Manager</h1>
+  <label for="baseSelect">Select Base:</label>
   <select id="baseSelect"></select>
   <button onclick="addBase()">+ Add Base</button>
+  <a href="dashboard.html">→ View Total Storage</a>
 
-  <div id="resourceSection"></div>
-
+  <div id="resourceEditor"></div>
   <script src="script.js"></script>
 </body>
 </html>
