@@ -4,19 +4,72 @@
   <meta charset="UTF-8">
   <title>Dune Awakening Base Terminal</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    .top-nav {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin: 30px 0;
+    }
+
+    .nav-button {
+      padding: 20px 40px;
+      font-size: 1.5em;
+      background-color: #111;
+      border: 2px solid #0ff;
+      color: #0ff;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: transform 0.1s ease-in-out, background-color 0.2s;
+    }
+
+    .nav-button:hover {
+      background-color: #0ff;
+      color: #111;
+      transform: scale(1.05) rotate(-1deg);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 3em;
+      color: #0ff;
+      text-shadow: 0 0 10px #0ff;
+    }
+
+    body {
+      background-color: #0a0a0a;
+      color: #ddd;
+      font-family: 'Courier New', monospace;
+      margin: 0;
+      padding: 0 20px;
+    }
+
+    .content-section {
+      max-width: 900px;
+      margin: auto;
+      background: #1a1a1a;
+      padding: 30px;
+      border-radius: 12px;
+      border: 1px solid #333;
+    }
+
+    select, button {
+      margin-top: 10px;
+    }
+  </style>
 </head>
-<body class="terminal">
-  <div class="centered-container">
-    <h1>RESOURCE TERMINAL</h1>
-    <div class="nav-buttons">
-      <a href="index.html">Manage Bases</a>
-      <a href="refining.html">⚗️ Crafting</a>
-      <a href="dashboard.html">📊 Dashboard</a>
-    </div>
+
+<body>
+  <h1>RESOURCE TERMINAL</h1>
+
+  <div class="top-nav">
+    <a href="index.html" class="nav-button">🛠️ Manage Bases</a>
+    <a href="refining.html" class="nav-button">⚗️ Crafting</a>
+    <a href="dashboard.html" class="nav-button">📊 Dashboard</a>
   </div>
 
   <div class="content-section">
-    <h2>🛠️ Manage Bases</h2>
+    <h2>Manage Bases</h2>
     <label for="baseSelect">Select Base:</label>
     <select id="baseSelect"></select>
     <button onclick="addBase()">➕ Add Base</button>
