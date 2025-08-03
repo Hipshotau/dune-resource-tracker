@@ -7,20 +7,24 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body class="terminal">
-  <div class="centered-container">
-    <h1>📊 Global Resource Dashboard</h1>
-    <div class="nav-buttons">
-      <a href="index.html" class="nav-button">🏠 Manage Bases</a>
-      <a href="refining.html" class="nav-button">⚗️ Recipes</a>
-      <a href="dashboard.html" class="nav-button">📊 Dashboard</a>
-    </div>
+<body>
+  <h1 class="centered neon">📊 Total Stockpile Dashboard</h1>
+  <nav class="centered">
+    <a href="index.html">🏠 Bases</a>
+    <a href="refining.html">⚗️ Recipes</a>
+    <a href="dashboard.html">📊 Dashboard</a>
+  </nav>
 
-    <canvas id="stockpileChart" width="600" height="300"></canvas>
-    <div id="summary"></div>
+  <div class="centered">
+    <canvas id="stockpileChart" style="max-width: 900px; background-color: #1e1e1e; border: 1px solid #555; padding: 10px; border-radius: 10px;"></canvas>
   </div>
 
+  <h2 class="centered neon">🧱 Resource Breakdown by Base</h2>
+  <div class="base-columns" id="baseBreakdown"></div>
+
   <script src="script.js"></script>
-  <script>renderTotalSummary();</script>
+  <script>
+    renderTotalSummary(true);  // True triggers chart
+  </script>
 </body>
 </html>

@@ -304,20 +304,81 @@ function renderRecipes() {
     const div = document.createElement("div");
     div.className = "resource-card";
     div.innerHTML = `
-  <strong>${recipe.name}</strong>
-  <div class="recipe">🔹 Inputs: ${recipe.inputs}</div>
-  <div class="recipe">🔸 Outputs: ${recipe.outputs}</div>
-  <button onclick="removeRecipe(${i})">❌ Delete</button>
-`;
-
+      <strong>${recipe.name}</strong>
+      <div class="recipe">🔹 Inputs: ${recipe.inputs}</div>
+      <div class="recipe">🔸 Outputs: ${recipe.outputs}</div>
+      <button onclick="removeRecipe(${i})">❌ Delete</button>
+    `;
     list.appendChild(div);
   });
+
+  populateCraftDropdown();  // <-- refresh dropdowns
 }
+
 
 function removeRecipe(index) {
   state.recipes.splice(index, 1);
   saveState();
   renderRecipes();
+}
+
+function populateCraftDropdown() {
+  const select = document.getElementById("craftRecipe");
+  if (!select || !state.recipes) return;
+  select.innerHTML = "";
+  state.recipes.forEach((recipe, index) => {
+    const opt = document.createElement("option");
+    opt.value = index;
+    opt.textContent = recipe.name;
+    select.appendChild(opt);
+  });
+}
+
+function simulateCraft() {
+  const base = state.bases[state.selectedBase];
+  const recipeIndex = parseInt(document.getElementById("craftRecipe").value);
+  const qty = parseInt(document.getElementById("craftQty").value) || 1;
+  const recipe = state.recipes[recipeIndex];
+
+  const inputList = parseIngredients(recipe.inputs);
+  const totalRequired = {};
+
+  for (let item of inputList) {
+    totalRequired[item.name] = (totalRequired[item.name] || 0) + item.qty * qty;
+  }
+
+  // Check availability
+  for (let name in totalRequired) {
+    const available = base.resources[name] || 0;
+    if (available < totalRequired[name]) {
+      alert(`❌ Not enough ${name}. Need ${totalRequired[name]}, have ${available}.`);
+      return;
+    }
+  }
+
+  // Deduct inputs
+  for (let name in totalRequired) {
+    base.resources[name] -= totalRequired[name];
+  }
+
+  // Add outputs
+  const outputList = parseIngredients(recipe.outputs);
+  for (let item of outputList) {
+    base.resources[item.name] = (base.resources[item.name] || 0) + item.qty * qty;
+  }
+
+  alert(`✅ Crafted ${qty}x ${recipe.name}`);
+  saveState();
+  renderResourceEditor();
+}
+
+function parseIngredients(text) {
+  return text.split(",").map(s => {
+    const parts = s.trim().split(" ");
+    const qty = parseInt(parts[0]) || 1;
+    const name = parts.slice(1).join(" ");
+    return { name, qty };
+  });
 }
 
 
