@@ -5,44 +5,39 @@
   <title>Dune Awakening - Refining</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <h1>Recipe & Crafting Manager</h1>
-  <nav>
-    <a href="index.html">🏠 Bases</a>
-    <a href="refining.html">⚗️ Recipes</a>
-    <a href="dashboard.html">📊 Dashboard</a>
-  </nav>
 
-  <h2>Filter by Tier</h2>
-  <select id="tierFilter" onchange="renderRecipes()">
-    <option value="0">All</option>
-    <option value="1">Tier 1</option>
-    <option value="2">Tier 2</option>
-    <option value="3">Tier 3</option>
-    <option value="4">Tier 4</option>
-    <option value="5">Tier 5</option>
-    <option value="6">Tier 6</option>
-  </select>
+<body class="terminal">
+  <div class="centered-container">
+    <h1>⚗️ Crafting & Refining Terminal</h1>
+    <div class="nav-buttons">
+      <a href="index.html" class="nav-button">🏠 Manage Bases</a>
+      <a href="refining.html" class="nav-button">⚗️ Recipes</a>
+      <a href="dashboard.html" class="nav-button">📊 Dashboard</a>
+    </div>
 
-  <div id="recipeList"></div>
+    <div>
+      <h2>Add Resource</h2>
+      <input id="newResource" placeholder="New Resource">
+      <button onclick="addResource()">+ Add</button>
+      <div id="resourceList"></div>
+    </div>
 
-  <h3>Create New Recipe</h3>
-  <input id="recipeName" placeholder="Recipe name">
-  <textarea id="recipeInputs" placeholder="Inputs (e.g., 50 Water, 5 Sand)"></textarea>
-  <textarea id="recipeOutputs" placeholder="Outputs (e.g., 1 Silicon Block)"></textarea>
-  <select id="recipeTier">
-    <option value="1">Tier 1</option>
-    <option value="2">Tier 2</option>
-    <option value="3">Tier 3</option>
-    <option value="4">Tier 4</option>
-    <option value="5">Tier 5</option>
-    <option value="6">Tier 6</option>
-  </select>
-  <button onclick="addRecipe()">+ Add Recipe</button>
+    <div>
+      <h2>Add Recipe</h2>
+      <input id="recipeName" placeholder="Recipe Name"><br>
+      <input id="recipeInputs" placeholder="Inputs"><br>
+      <input id="recipeOutputs" placeholder="Outputs"><br>
+      <button onclick="addRecipe()">+ Add Recipe</button>
+    </div>
+
+    <h2>All Recipes</h2>
+    <div id="recipeList"></div>
+  </div>
 
   <script src="script.js"></script>
   <script>
-    preloadRecipes(); // Load initial recipes into localStorage
+    preloadRecipes();
+    renderResources();
     renderRecipes();
   </script>
 </body>

@@ -4,30 +4,23 @@
   <meta charset="UTF-8">
   <title>Dune Awakening - Dashboard</title>
   <link rel="stylesheet" href="style.css">
-  <!-- Chart.js for visualizing stockpiles -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body>
-  <h1>Global Resource Dashboard</h1>
+<body class="terminal">
+  <div class="centered-container">
+    <h1>📊 Global Resource Dashboard</h1>
+    <div class="nav-buttons">
+      <a href="index.html" class="nav-button">🏠 Manage Bases</a>
+      <a href="refining.html" class="nav-button">⚗️ Recipes</a>
+      <a href="dashboard.html" class="nav-button">📊 Dashboard</a>
+    </div>
 
-  <nav>
-    <a href="index.html">🏠 Bases</a>
-    <a href="refining.html">⚗️ Recipes</a>
-    <a href="dashboard.html">📊 Dashboard</a>
-  </nav>
+    <canvas id="stockpileChart" width="600" height="300"></canvas>
+    <div id="summary"></div>
+  </div>
 
-  <!-- Resource totals table -->
-  <div id="summary"></div>
-
-  <!-- Chart visualizing total stockpiles -->
-  <h2>Stockpile Chart</h2>
-  <canvas id="stockpileChart" width="1000" height="400" style="background-color:#2a2a2a; border:1px solid #444;"></canvas>
-
-  <!-- Load logic -->
   <script src="script.js"></script>
-  <script>
-    renderTotalSummary();
-  </script>
+  <script>renderTotalSummary();</script>
 </body>
 </html>
