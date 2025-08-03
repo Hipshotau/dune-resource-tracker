@@ -7,12 +7,30 @@
 </head>
 <body class="terminal">
   <div class="centered-container">
-    <h1>🛰️ DUNE RESOURCE TERMINAL</h1>
+    <h1>RESOURCE TERMINAL</h1>
     <div class="nav-buttons">
-      <a href="index.html" class="nav-button">🏠 Manage Bases</a>
-      <a href="refining.html" class="nav-button">⚗️ Crafting & Recipes</a>
-      <a href="dashboard.html" class="nav-button">📊 Resource Dashboard</a>
+      <a href="index.html" class="nav-button">Manage Bases</a>
+      <a href="refining.html" class="nav-button">Crafting & Recipes</a>
+      <a href="dashboard.html" class="nav-button">Resource Stockpile</a>
     </div>
   </div>
+
+  <div class="content-section">
+    <h2>🛠️ Manage Bases</h2>
+    <label for="baseSelect">Select Base:</label>
+    <select id="baseSelect"></select>
+    <button onclick="addBase()">➕ Add Base</button>
+    <button onclick="removeBase()">❌ Remove Base</button>
+
+    <div id="refineryList"></div>
+    <div id="resourceEditor"></div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    updateBaseSelect();
+    renderResourceEditor();
+    renderRefineryList();
+  </script>
 </body>
 </html>

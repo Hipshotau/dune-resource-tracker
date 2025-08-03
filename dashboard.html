@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Dune Awakening - Dashboard</title>
@@ -16,7 +17,8 @@
   </nav>
 
   <div class="centered">
-    <canvas id="stockpileChart" style="max-width: 900px; background-color: #1e1e1e; border: 1px solid #555; padding: 10px; border-radius: 10px;"></canvas>
+    <canvas id="stockpileChart"
+      style="max-width: 900px; background-color: #1e1e1e; border: 1px solid #555; padding: 10px; border-radius: 10px;"></canvas>
   </div>
 
   <h2 class="centered neon">🧱 Resource Breakdown by Base</h2>
@@ -24,7 +26,10 @@
 
   <script src="script.js"></script>
   <script>
-    renderTotalSummary(true);  // True triggers chart
+    renderTotalSummary(true);      // Draw chart
+    renderBaseStockpiles();       // Show base-by-base resources
   </script>
+
 </body>
+
 </html>

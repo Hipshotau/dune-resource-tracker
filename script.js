@@ -137,9 +137,11 @@ function updateBaseSelect() {
   select.onchange = () => {
     state.selectedBase = select.value;
     renderResourceEditor();
+    renderRefineryList(); // <-- Add this
     saveState();
   };
 }
+
 
 function renderResourceEditor() {
   const container = document.getElementById("resourceEditor");
@@ -245,6 +247,53 @@ function renderTotalSummary() {
   });
 }
 
+function renderBaseStockpiles() {
+  const container = document.getElementById("baseStockpiles");
+  if (!container) return;
+
+  container.innerHTML = "<h2>Base Stockpiles</h2>";
+
+  const important = [
+    "Granite", "Plastone", "Duraluminum Ingot", "Aluminum Ingot",
+    "Cobalt Paste", "Silicone Block", "Flour Sand", "Spice Sand",
+    "Spice Melange", "Plastanium Ingot", "Iron Ingot", "Steel Ingot",
+    "Basalt", "Iron Ore", "Carbon Ore", "Aluminum Ore",
+    "Erythrite Crystal", "Jasmium Crystal", "Plant Fiber", "Agave Seeds",
+    "Water", "Copper Ingot", "Copper Ore"
+  ];
+
+  for (let baseName in state.bases) {
+    const base = state.bases[baseName];
+    const div = document.createElement("div");
+    div.className = "resource-card";
+    div.innerHTML = `<h3>${baseName}</h3>`;
+
+    const table = document.createElement("table");
+    const sorted = Object.entries(base.resources || {})
+      .filter(([name]) => important.includes(name))
+      .sort((a, b) => b[1] - a[1]);
+
+    sorted.forEach(([name, qty]) => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${name}</td>
+        <td>
+          <input type="number" value="${qty}" 
+            onchange="updateBaseResource('${baseName}', '${name}', this.value)">
+        </td>`;
+      table.appendChild(row);
+    });
+
+    div.appendChild(table);
+    container.appendChild(div);
+  }
+}
+
+function updateBaseResource(baseName, resName, value) {
+  state.bases[baseName].resources[resName] = parseInt(value) || 0;
+  saveState();
+}
+
 
 // Default refining data
 if (!state.resources) state.resources = [];
@@ -313,6 +362,58 @@ function renderRecipes() {
   });
 
   populateCraftDropdown();  // <-- refresh dropdowns
+}
+
+function removeBase() {
+  if (confirm(`Delete base "${state.selectedBase}"?`)) {
+    delete state.bases[state.selectedBase];
+    const first = Object.keys(state.bases)[0];
+    state.selectedBase = first || null;
+    updateBaseSelect();
+    renderResourceEditor();
+    renderRefineryList();
+    saveState();
+  }
+}
+
+function renderRefineryList() {
+  const container = document.getElementById("refineryList");
+  if (!container || !state.selectedBase) return;
+
+  const base = state.bases[state.selectedBase];
+  container.innerHTML = `<h3>Refineries at ${state.selectedBase}</h3>`;
+
+  const list = document.createElement("ul");
+  base.refiners.forEach((r, i) => {
+    const li = document.createElement("li");
+    li.textContent = r;
+    const delBtn = document.createElement("button");
+    delBtn.textContent = "❌";
+    delBtn.onclick = () => {
+      base.refiners.splice(i, 1);
+      renderRefineryList();
+      saveState();
+    };
+    li.appendChild(delBtn);
+    list.appendChild(li);
+  });
+
+  const input = document.createElement("input");
+  input.placeholder = "Add refinery (e.g. Medium Ore Refinery)";
+  const btn = document.createElement("button");
+  btn.textContent = "➕";
+  btn.onclick = () => {
+    if (input.value.trim()) {
+      base.refiners.push(input.value.trim());
+      input.value = "";
+      renderRefineryList();
+      saveState();
+    }
+  };
+
+  container.appendChild(list);
+  container.appendChild(input);
+  container.appendChild(btn);
 }
 
 
