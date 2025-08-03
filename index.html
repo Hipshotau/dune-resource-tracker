@@ -9,26 +9,71 @@
 <body class="terminal">
   <h1 class="centered neon">🛠️ Manage Bases</h1>
 
-  <div class="top-nav">
+  <div class="top-nav centered">
     <a href="index.html" class="nav-button">🛠️ Manage Bases</a>
     <a href="dashboard.html" class="nav-button">📊 Resource Dashboard</a>
   </div>
 
-  <div class="centered" style="margin-bottom: 20px;">
-    <button onclick="addBase()">➕ Add Base</button>
-    <button onclick="removeBase()">❌ Remove Base</button>
+  <!-- Base Config Setup -->
+  <div class="centered content-section" style="margin-bottom: 20px;">
+    <label>Base Name: <input type="text" id="baseNameInput"></label>
+    <label>Ore Refinery:
+      <select id="oreRefinery">
+        <option>Small</option>
+        <option>Medium</option>
+        <option>Large</option>
+      </select>
+    </label>
+    <label>Chemical Refinery:
+      <select id="chemicalRefinery">
+        <option>Small</option>
+        <option>Medium</option>
+      </select>
+    </label>
+    <label>Spice Refinery:
+      <select id="spiceRefinery">
+        <option>Small</option>
+        <option>Medium</option>
+        <option>Large</option>
+      </select>
+    </label>
+    <label>Deathstill:
+      <select id="deathstillType">
+        <option>Basic</option>
+        <option>Advanced</option>
+      </select>
+    </label>
+    <label>Number of Deathstills: <input type="number" id="deathstillCount" min="0" value="1"></label>
+    <button onclick="submitBaseConfig()">✅ Submit Base</button>
   </div>
 
-  <div id="baseSelect" hidden></div>
-  <div id="refinerySettings" class="content-section"></div>
-  <div id="resourceEditor" class="content-section"></div>
+  <!-- Resource Editor -->
+  <h2 class="centered neon">🔄 Distribute Resources</h2>
+  <div class="centered content-section">
+    <label>Select Base:
+      <select id="distributeBase"></select>
+    </label>
+    <label>Select Resource:
+      <select id="distributeResource"></select>
+    </label>
+    <div style="margin-top: 10px;">
+      <button onclick="modifyInput(1)">+1</button>
+      <button onclick="modifyInput(100)">+100</button>
+      <button onclick="modifyInput(500)">+500</button>
+      <input type="number" id="customAmount" value="0" min="0">
+      <button onclick="applyResource()">💾 Add</button>
+    </div>
+  </div>
+
+  <!-- Base Columns -->
+  <h2 class="centered neon">🏭 Bases</h2>
   <div id="basesContainer" class="base-columns"></div>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      updateBaseSelect();
-      renderRefineryList();
-      renderResourceEditor();
+      updateBaseSelect(); // for dropdowns
+      renderBases(); // renders base columns
+      updateResourceDropdown(); // populates resource list
     });
   </script>
 </body>
