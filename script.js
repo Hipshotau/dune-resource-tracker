@@ -8,6 +8,108 @@ let state = JSON.parse(localStorage.getItem("duneState")) || {
   selectedBase: "Arrakis North"
 };
 
+function preloadRecipes() {
+  if (localStorage.getItem("duneState")) return; // Don't overwrite user data
+
+  const state = {
+    bases: {},
+    selectedBase: null,
+    resources: [],
+    recipes: []
+  };
+
+  const recipes = [
+    {
+      name: "Advanced Fremen Deathstill",
+      inputs: "1 Body",
+      outputs: "45000 Water",
+      tier: 6
+    },
+    {
+      name: "Fremen Deathstill",
+      inputs: "1 Body",
+      outputs: "25000 Water",
+      tier: 5
+    },
+    {
+      name: "Spice Melange (Small)",
+      inputs: "Spice Sand",
+      outputs: "1 Spice Melange",
+      tier: 3
+    },
+    {
+      name: "Spice Melange (Medium)",
+      inputs: "Spice Sand x10",
+      outputs: "10 Spice Melange",
+      tier: 3
+    },
+    {
+      name: "Spice Melange (Large)",
+      inputs: "Spice Sand x200",
+      outputs: "200 Spice Melange",
+      tier: 3
+    },
+    {
+      name: "Aluminum Ingot (Large)",
+      inputs: "200 Water, 4 Aluminum Ore",
+      outputs: "1 Aluminum Ingot",
+      tier: 4
+    },
+    {
+      name: "Copper Ingot (Large)",
+      inputs: "2 Copper Ore",
+      outputs: "1 Copper Ingot",
+      tier: 1
+    },
+    {
+      name: "Steel Ingot (Large)",
+      inputs: "50 Water, 2 Carbon Ore, 1 Iron Ingot",
+      outputs: "1 Steel Ingot",
+      tier: 3
+    },
+    {
+      name: "Stravidium Fiber",
+      inputs: "100 Water, 1 Stravidium Mass",
+      outputs: "1 Stravidium Fiber",
+      tier: 6
+    },
+    {
+      name: "Plastanium Ingot",
+      inputs: "1250 Water, 4 Titanium Ore, 1 Stravidium Fiber",
+      outputs: "1 Plastanium Ingot",
+      tier: 6
+    },
+    {
+      name: "Lubricant (Low Grade)",
+      inputs: "4 Fuel Cell, 5 Spice Residue",
+      outputs: "5 Low-grade Lubricant",
+      tier: 3
+    },
+    {
+      name: "Industrial Lubricant",
+      inputs: "15 Water, 8 Fuel Cell, 4 Silicone Block",
+      outputs: "10 Industrial-grade Lubricant",
+      tier: 5
+    },
+    {
+      name: "Silicone Block",
+      inputs: "50 Water, 5 Flour Sand",
+      outputs: "1 Silicone Block",
+      tier: 2
+    },
+    {
+      name: "Cobalt Paste",
+      inputs: "75 Water, 2 Erythrite Crystal",
+      outputs: "1 Cobalt Paste",
+      tier: 3
+    }
+  ];
+
+  state.recipes = recipes;
+  localStorage.setItem("duneState", JSON.stringify(state));
+}
+
+
 function saveState() {
   localStorage.setItem("duneState", JSON.stringify(state));
 }
@@ -88,6 +190,7 @@ function addResource() {
 
 function renderTotalSummary() {
   const container = document.getElementById("summary");
+  const chartCanvas = document.getElementById("stockpileChart");
   const totals = {};
 
   for (let baseName in state.bases) {
@@ -97,6 +200,7 @@ function renderTotalSummary() {
     }
   }
 
+  // Render table
   const table = document.createElement("table");
   for (let key in totals) {
     const row = document.createElement("tr");
@@ -105,7 +209,42 @@ function renderTotalSummary() {
   }
   container.innerHTML = "<h2>Resource Totals</h2>";
   container.appendChild(table);
+
+  // Render chart
+  const labels = Object.keys(totals);
+  const data = Object.values(totals);
+
+  new Chart(chartCanvas, {
+    type: "bar",
+    data: {
+      labels: labels,
+      datasets: [{
+        label: "Total Stockpile",
+        data: data,
+        backgroundColor: "rgba(255, 204, 0, 0.6)",
+        borderColor: "rgba(255, 204, 0, 1)",
+        borderWidth: 1
+      }]
+    },
+    options: {
+      plugins: {
+        legend: { display: false }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: { color: "#fff" },
+          grid: { color: "#333" }
+        },
+        x: {
+          ticks: { color: "#fff" },
+          grid: { color: "#333" }
+        }
+      }
+    }
+  });
 }
+
 
 // Default refining data
 if (!state.resources) state.resources = [];
@@ -163,13 +302,14 @@ function renderRecipes() {
   list.innerHTML = "";
   state.recipes.forEach((recipe, i) => {
     const div = document.createElement("div");
+    div.className = "resource-card";
     div.innerHTML = `
-      <strong>${recipe.name}</strong><br>
-      🔹 Inputs: ${recipe.inputs}<br>
-      🔸 Outputs: ${recipe.outputs}<br>
-      <button onclick="removeRecipe(${i})">❌ Delete</button>
-      <hr>
-    `;
+  <strong>${recipe.name}</strong>
+  <div class="recipe">🔹 Inputs: ${recipe.inputs}</div>
+  <div class="recipe">🔸 Outputs: ${recipe.outputs}</div>
+  <button onclick="removeRecipe(${i})">❌ Delete</button>
+`;
+
     list.appendChild(div);
   });
 }
