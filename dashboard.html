@@ -1,29 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Dune Awakening - Dashboard</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js" defer></script>
 </head>
 <body class="terminal">
   <h1 class="centered neon">📊 Total Stockpile Dashboard</h1>
 
-  <div class="top-nav">
-    <a href="index.html" class="nav-button">🛠️ Manage Bases</a>
-    <a href="dashboard.html" class="nav-button">📊 Resource Dashboard</a>
+  <div class="top-nav centered">
+    <a href="index.html" class="nav-button large-button">🛠️ Manage Bases</a>
+    <a href="dashboard.html" class="nav-button large-button">📊 Resource Dashboard</a>
   </div>
 
   <div class="centered" style="margin-top: 20px;">
     <canvas id="stockpileChart" style="max-width: 900px; background-color: #1e1e1e; border: 1px solid #555; padding: 10px; border-radius: 10px;"></canvas>
   </div>
 
-  <h2 class="centered neon">🧱 Resource Totals</h2>
+  <h2 class="centered neon">📦 Resource Totals</h2>
   <div id="summary" class="content-section centered"></div>
 
-  <script src="script.js"></script>
   <script>
-    renderTotalSummary(true); // triggers chart
+    renderTotalSummary(true);
   </script>
 </body>
 </html>

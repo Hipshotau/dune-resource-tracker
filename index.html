@@ -1,79 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Dune Awakening - Manage Bases</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
   <script src="script.js" defer></script>
 </head>
 <body class="terminal">
   <h1 class="centered neon">🛠️ Manage Bases</h1>
 
   <div class="top-nav centered">
-    <a href="index.html" class="nav-button">🛠️ Manage Bases</a>
-    <a href="dashboard.html" class="nav-button">📊 Resource Dashboard</a>
+    <a href="index.html" class="nav-button large-button">🛠️ Manage Bases</a>
+    <a href="dashboard.html" class="nav-button large-button">📊 Resource Dashboard</a>
   </div>
 
-  <!-- Base Config Setup -->
-  <div class="centered content-section" style="margin-bottom: 20px;">
-    <label>Base Name: <input type="text" id="baseNameInput"></label>
-    <label>Ore Refinery:
-      <select id="oreRefinery">
-        <option>Small</option>
-        <option>Medium</option>
-        <option>Large</option>
-      </select>
-    </label>
-    <label>Chemical Refinery:
-      <select id="chemicalRefinery">
-        <option>Small</option>
-        <option>Medium</option>
-      </select>
-    </label>
-    <label>Spice Refinery:
-      <select id="spiceRefinery">
-        <option>Small</option>
-        <option>Medium</option>
-        <option>Large</option>
-      </select>
-    </label>
-    <label>Deathstill:
-      <select id="deathstillType">
-        <option>Basic</option>
-        <option>Advanced</option>
-      </select>
-    </label>
-    <label>Number of Deathstills: <input type="number" id="deathstillCount" min="0" value="1"></label>
-    <button onclick="submitBaseConfig()">✅ Submit Base</button>
-  </div>
-
-  <!-- Resource Editor -->
-  <h2 class="centered neon">🔄 Distribute Resources</h2>
+  <!-- Create Base -->
   <div class="centered content-section">
-    <label>Select Base:
-      <select id="distributeBase"></select>
-    </label>
-    <label>Select Resource:
-      <select id="distributeResource"></select>
-    </label>
-    <div style="margin-top: 10px;">
-      <button onclick="modifyInput(1)">+1</button>
-      <button onclick="modifyInput(100)">+100</button>
-      <button onclick="modifyInput(500)">+500</button>
-      <input type="number" id="customAmount" value="0" min="0">
-      <button onclick="applyResource()">💾 Add</button>
+    <h2 class="neon">➕ Create New Base</h2>
+    <input id="newBaseName" placeholder="Enter base name" />
+    <div>
+      <label>Ore Refinery:</label>
+      <select id="oreRefinery">
+        <option value="Small">Small</option>
+        <option value="Medium">Medium</option>
+        <option value="Large">Large</option>
+      </select>
+    </div>
+    <div>
+      <label>Chemical Refinery:</label>
+      <select id="chemicalRefinery">
+        <option value="Small">Small</option>
+        <option value="Medium">Medium</option>
+      </select>
+    </div>
+    <div>
+      <label>Spice Refinery:</label>
+      <select id="spiceRefinery">
+        <option value="Small">Small</option>
+        <option value="Medium">Medium</option>
+        <option value="Large">Large</option>
+      </select>
+    </div>
+    <div>
+      <label>Deathstill Type:</label>
+      <select id="deathstillType">
+        <option value="Basic">Basic</option>
+        <option value="Advanced">Advanced</option>
+      </select>
+    </div>
+    <div>
+      <label># of Deathstills:</label>
+      <input type="number" id="deathstillCount" value="1" min="0" />
+    </div>
+    <button onclick="submitBase()">✅ Submit Base</button>
+  </div>
+
+  <!-- Resource Distribution -->
+  <div class="centered content-section">
+    <h2 class="neon">📦 Distribute Resources</h2>
+    <label>Select Base:</label>
+    <select id="resourceBase"></select>
+
+    <label>Select Resource:</label>
+    <select id="resourceName"></select>
+
+    <input id="resourceQty" type="number" value="0" />
+    <div class="button-group">
+      <button onclick="adjustResourceAmount(1)">+1</button>
+      <button onclick="adjustResourceAmount(100)">+100</button>
+      <button onclick="adjustResourceAmount(500)">+500</button>
+      <button onclick="submitResource()">💾 Save Resource</button>
     </div>
   </div>
 
-  <!-- Base Columns -->
-  <h2 class="centered neon">🏭 Bases</h2>
-  <div id="basesContainer" class="base-columns"></div>
+  <!-- Refining Panel -->
+  <div id="refiningUI" class="centered content-section"></div>
+
+  <!-- Base List -->
+  <div class="centered content-section">
+    <h2 class="neon">🏰 Bases</h2>
+    <div id="basesContainer" class="base-columns"></div>
+  </div>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      updateBaseSelect(); // for dropdowns
-      renderBases(); // renders base columns
-      updateResourceDropdown(); // populates resource list
+      populateBaseOptions();
+      populateResourceOptions();
+      renderBases();
+      renderRefiningUI();
     });
   </script>
 </body>
